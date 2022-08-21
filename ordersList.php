@@ -332,7 +332,7 @@ $total = 0;
                                     ?>
                                         <div class='timeline-row'>
                                             <div class='timeline-time' style="margin-top: -1em;">
-                                                <span><?php echo substr($date, 11,13) > 12 ? substr($date,11)."PM": substr($date, 11) . "AM"; ?></span><small><?php echo substr($date, 0, 10); ?></small>
+                                                <span><?php echo substr($date, 11, 13) > 12 ? substr($date, 11) . "PM" : substr($date, 11) . "AM"; ?></span><small><?php echo substr($date, 0, 10); ?></small>
                                             </div>
                                             <div class='timeline-dot fb-bg'></div>
                                             <div class='timeline-content'>
@@ -340,34 +340,34 @@ $total = 0;
                                                     <img src="images/<?php echo $server_image; ?>" width="70px" height="70px" style="border-radius: 50%;"></img>
                                                     <h5 style="margin-top: .8em;margin-left: 1em; color:#ffffff;font-weight: bold;"><?php echo $server; ?></h5>
                                                 </div>
-                                                    <div>
-                                                        <div class="d-flex">
-                                                            <?php while ($row2 = $items->fetch_assoc()) {
-                                                                $total += $row2['qte'] * $row2['price'];
-                                                            ?>
-                                                                <div class="d-flex p-2">
-                                                                    <img src="images/<?php echo $row2['image']; ?>" width='70px' height="70px" alt='' style='border-radius:.5em; margin-top: .5em;'><span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'> <?php echo $row2['price'] . ".00dh X " . $row2['qte']; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                </div>
-                                                            <?php  } ?>
-                                                        </div>
-                                                        <div class="d-flex p-2">
-                                                            <h5> <span class='badge badge-light'>Total : <?php echo $total; ?>.00 DH</span></h5>
-                                                        </div>
+                                                <div>
+                                                    <div class="d-flex">
+                                                        <?php while ($row2 = $items->fetch_assoc()) {
+                                                            $total += $row2['qte'] * $row2['price'];
+                                                        ?>
+                                                            <div class="d-flex p-2">
+                                                                <img src="images/<?php echo $row2['image']; ?>" width='70px' height="70px" alt='' style='border-radius:.5em; margin-top: .5em;'><span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'> <?php echo $row2['price'] . ".00dh X " . $row2['qte']; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </div>
+                                                        <?php  } ?>
+                                                    </div>
+                                                    <div class="d-flex p-2" style="text-align: end;">
+                                                        <h5> <span class='badge badge-light'>Total : <?php echo $total; ?>.00 DH</span></h5>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <?php $total = 0;
-                                    }  ?>
                                         </div>
-                                        <!-- Timeline end -->
+                                    <?php $total = 0;
+                                    }  ?>
                                 </div>
+                                <!-- Timeline end -->
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--  -->
             </div>
+            <!--  -->
         </div>
+    </div>
 </body>
 <?php include 'layouts/scriptjs.html'; ?>
 

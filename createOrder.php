@@ -1,36 +1,25 @@
-<?php include 'layouts/header.html';
+<?php
 include('items/listOfItemsController.php');
 session_start();
 if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
     header("location: /minishop/start.php");
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include 'layouts/header.html'; ?>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> <?php echo basename($_SERVER['PHP_SELF']) ?> </title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
 <body>
     <div class="wrapper d-flex align-items-stretch">
@@ -39,7 +28,7 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
             <?php include 'layouts/navbar.html'; ?>
             <div class="row">
                 <div class="col-sm-9">
-                    <div class="card" style="border-radius: 1em;">
+                    <div class="card" style="border-radius: 1em; height: 250px;">
                         <div class="card-body">
                             <div id="carouselExampleIndicators" class="carousel slide" style="width: 80%;" data-ride="carousel">
                                 <div class="carousel-inner " style="margin-left: 5em; ">
@@ -81,19 +70,43 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                                 </ul>
                             </div>
                             <hr>
-                            <h6 style="color: lightslategray; text-align: end;"> Total : <span id="total" style="color: whitesmoke;" class="badge bg-danger"> 45.00 Dh</span></h6>
+                            <div class="vertical-center">
+                                <h6 style="color: lightslategray; text-align: end;"> <button id="place_order" class="btn btn-primary">Confirm</button> &nbsp;&nbsp;&nbsp; Total : <span id="total" style="color: whitesmoke;" class="badge bg-danger"> 00.00 Dh</span></h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- -------------------------------toast---------------------------------- -->
+
+            <br><br>
+
+            <div class="toast bg-success fade mt-4 text-white" id="myToast">
+                <div class="toast-header bg-success align-items-end text-white">
+                    <strong class="me-auto"><i class="bi-gift-fill"></i> Thank you!</strong>
+                    <small class="">10 mins ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    Order created successfully!
+                </div>
+            </div>
+
+            <!-- -------------------------------toast---------------------------------- -->
         </div>
     </div>
 </body>
-<?php include 'layouts/scriptjs.html'; ?>
+<!-- <script src="js/jquery.min.js"></script> -->
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+
 <script>
     $(document).ready(function() {
+        $('#place_order').prop('disabled', true);
         $("#total").text("00.00DH");
         var total = 0;
+        var last_created_order_id = 0;
         $("input[type=checkbox]").change(function() {
 
             if ($(this).is(":checked")) {
@@ -120,27 +133,6 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                     $("#item_list").append("<li><span hidden class='item_id_to_insert'>" + item_id + "</span>" + item_name + " <span style='color: whitesmoke;' class='badge bg-success'> X " + item_qte + "</span><span hidden class='item_price_to_insert'>" + item_price + "</span><span hidden class='item_qte_to_insert'>" + item_qte + "</span></li>");
                 }
 
-                // if (item_id == '' || item_id == '' ) {
-                //     alert("Please select an item.");
-                //     return false;
-                // }
-
-                // $.ajax({
-                //     type: "POST",
-                //     url: "submission.php",
-                //     data: {
-                //         item_id: item_id,
-                //         item_qte: item_qte
-                //     },
-                //     cache: false,
-                //     success: function(data) {
-                //         alert(data);
-                //     },
-                //     error: function(xhr, status, error) {
-                //         console.error(xhr);
-                //     }
-                // });
-
             } else {
                 $("#item_list li").each((id, elem) => {
                     var item_id = $(this).parent().find("#item_id").val();
@@ -160,6 +152,12 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
             });
 
             $("#total").text(total + ".00DH");
+
+            if ($("#item_list li").length > 0) {
+                $('#place_order').prop('disabled', false);
+            } else {
+                $('#place_order').prop('disabled', true);
+            }
         });
 
 
@@ -195,10 +193,54 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
             });
 
             $("#total").text(total + ".00DH");
-
+           
         });
 
-         
+        $("#place_order").click(function() {
+            $.ajax({
+                type: "POST",
+                url: "submission.php",
+                data: {
+                    server_id: 1
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.id);
+
+                    last_created_order_id = data.id;
+                    $("#item_list li").each((id, elem) => {
+                        var id = parseInt($(elem).find(".item_id_to_insert").text());
+                        var qte = parseInt($(elem).find(".item_qte_to_insert").text());
+                        var price = parseInt($(elem).find(".item_price_to_insert").text());
+                        $.ajax({
+                            type: "POST",
+                            url: "createOrderLine.php",
+                            data: {
+                                order_id: last_created_order_id,
+                                item: id,
+                                qte: qte,
+                                price: price
+                            },
+                            dataType: 'json',
+                            success: function(data) {},
+                            error: function(xhr, status, error) {
+                                alert(error + "---------[errr]");
+                            }
+                        });
+                    });
+                    $("#myToast").toast({
+                        delay: 5000
+                    });
+                    $("#myToast").toast("show");
+                },
+                error: function(xhr, status, error) {
+                    alert(error + "{errr}");
+                }
+            });
+
+
+
+        });
     });
 </script>
 
