@@ -1,15 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "myshop";
-
-//create connection
-$connection = new mysqli($servername, $username, $password, $database);
-session_start();
-if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
-    header("location: /minishop/start.php");
-}
+include('connection.php');
+include('items/auth.php');
 //---------------------------------------
 $id = "";
 $name = "";

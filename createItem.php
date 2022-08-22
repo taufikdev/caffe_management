@@ -1,10 +1,7 @@
 <?php
 include('connection.php');
-session_start();
-if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
-    header("location: /minishop/start.php");
-}
-//---------------------------------------
+include('items/auth.php');
+
 $name = "";
 $price = "";
 $image = "";

@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'layouts/header.html';
-session_start();
-if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
-    header("location: /minishop/start.php");
-}
+include('items/auth.php');
 ?>
 
 <body>

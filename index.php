@@ -2,10 +2,7 @@
 <html lang="en">
 <?php include 'layouts/header.html';
 include('connection.php');
-    session_start();
-    if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
-        header("location: /minishop/start.php");
-    }
+include('items/auth.php');
 // read all the row from database
 $sql = "SELECT * FROM clients";
 $result = $connection->query($sql);

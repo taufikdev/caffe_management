@@ -84,7 +84,7 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
             <div class="toast bg-success fade mt-4 text-white" id="myToast">
                 <div class="toast-header bg-success align-items-end text-white">
                     <strong class="me-auto"><i class="bi-gift-fill"></i> Thank you!</strong>
-                    <small class="">10 mins ago</small>
+                    <small class="">1s ago</small>
                     <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                 </div>
                 <div class="toast-body">
@@ -201,7 +201,7 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                 type: "POST",
                 url: "submission.php",
                 data: {
-                    server_id: 1
+                    server_id: <?php echo $_SESSION['staff_id']; ?>
                 },
                 dataType: 'json',
                 success: function(data) {

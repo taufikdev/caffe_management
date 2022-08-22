@@ -3,7 +3,7 @@
 <?php include 'layouts/header.html';
 include('connection.php');
 session_start();
-if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin' || $_SESSION['role'] !== 'server')) {
     header("location: /minishop/start.php");
 }
 // $sql = 'SELECT `order`.id,stuff.name as "server" ,`item`.`name` as "beverage", `item`.`image`, `item`.`price`, `order_line`.`qte` , date FROM `order` JOIN `order_line` ON order.id=order_line.order_id JOIN stuff ON order.server=stuff.id JOIN item on order_line.item=item.id ORDER BY date DESC; ';

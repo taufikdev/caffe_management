@@ -5,13 +5,12 @@ include('connection.php');
 
 $php_errormsg = "";
 
-if(isset($_POST['login']))
-{
+if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     $password = sha1($password);
-    
+
     $sql = "SELECT * FROM users where username='$username' AND password = '$password'";
     $result = $connection->query($sql);
     if (!$result) {
@@ -21,18 +20,23 @@ if(isset($_POST['login']))
 
     $row = $result->fetch_assoc();
 
-    if($result->num_rows==1 && $row['role'] === 'admin'){
+    if ($result->num_rows == 1 && $row['role'] === 'admin') {
         session_regenerate_id();
         $_SESSION['username'] = $row['username'];
         $_SESSION['role'] = $row['role'];
+        $_SESSION['staff_id'] = $row['staff_id'];
         session_write_close();
         header('location: /minishop/home.php');
-    }else
-    {
+    } else if ($result->num_rows == 1 && $row['role'] === 'server') {
+        session_regenerate_id();
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['role'] = $row['role'];
+        $_SESSION['staff_id'] = $row['staff_id'];
+        session_write_close();
+        header('location: /minishop/ordersList.php');
+    } else {
         header('location: /minishop/start.php');
-
     }
-
 }
 
 ?>
@@ -50,6 +54,11 @@ if(isset($_POST['login']))
     <!------ Include the above in your HEAD tag ---------->
     <title>Coffe shop</title>
 </head>
+<style>
+    body {
+        background-image: url('images/doodles.jpg');
+    }
+</style>
 
 <body>
     <div class="login-reg-panel">
@@ -70,12 +79,13 @@ if(isset($_POST['login']))
         <div class="white-panel">
             <div class="login-show">
                 <h2>LOGIN</h2>
-                <form action="" method="post" >
+                <form action="" method="post">
                     <input type="text" name="username" placeholder="Username">
                     <input type="password" name="password" placeholder="Password">
                     <input type="submit" class="bttn" name="login" value="Login">
                     <a href="">Forgot password?</a>
                 </form>
+                <img src="images/logo.png" style="width: 120px;height: 110px;" alt="" class="mt-4">
             </div>
             <div class="register-show">
                 <h2>REGISTER</h2>
