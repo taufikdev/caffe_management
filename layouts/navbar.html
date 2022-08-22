@@ -24,7 +24,7 @@ include('items/listOfStaffController.php');
                 <li class="nav-item active ml-4">
                   <div class="d-flex mr-4">
                     <a class="nav-link">Welcome <span style="font-weight: bold; color: yellowgreen;"><?php echo $_SESSION['role']." : ". $_SESSION['username']; ?></span> </a>
-                    <img src="images/<?php echo $result_server->fetch_assoc()['image']; ?>" style="width: 45px; border-radius: 50%;" alt="" >
+                    <img src="images/<?php echo $result_server->fetch_assoc()['image']; ?>" style="width: 45px; height: 45px;border-radius: 50%;" alt="" >
                   </div>
                 </li>
                 <li class="nav-item">

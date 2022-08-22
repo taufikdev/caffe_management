@@ -6,7 +6,7 @@ session_start();
 if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin' || $_SESSION['role'] !== 'server')) {
     header("location: /minishop/start.php");
 }
-// $sql = 'SELECT `order`.id,stuff.name as "server" ,`item`.`name` as "beverage", `item`.`image`, `item`.`price`, `order_line`.`qte` , date FROM `order` JOIN `order_line` ON order.id=order_line.order_id JOIN stuff ON order.server=stuff.id JOIN item on order_line.item=item.id ORDER BY date DESC; ';
+
 $sql = "SELECT * FROM `order` ORDER BY date DESC;";
 $result = $connection->query($sql);
 
@@ -317,7 +317,7 @@ $total = 0;
 
             <br>
             <div class="container bootdey">
-                <div class="row gutters ">
+                <div class="row gutters">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         <div class="card" style="border-radius: 1em;">
                             <div class="card-body">
