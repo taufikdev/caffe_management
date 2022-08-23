@@ -306,21 +306,22 @@ $total = 0;
         <?php include 'layouts/sidebar.html'; ?>
         <div id="content" class="p-4 p-md-5">
             <?php include 'layouts/navbar.html'; ?>
-            <div class="row">
-                <div class="col-md-4">
-                    <h3>List of Orders</h3>
-                </div>
-                <div class="col-md-8 d-flex justify-content-end">
-                    <a href="/minishop/createOrder.php" role="button" class="btn btn-primary">New Order</a> <br> <br>
-                </div>
-            </div>
+            <div class="card" style="border-radius: 1em;">
+                <div class="card-header">
 
-            <br>
-            <div class="container bootdey">
-                <div class="row gutters">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        <div class="card" style="border-radius: 1em;">
-                            <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>List of <span style="font-weight: bold;color: yellowgreen;">Orders</span></h4>
+                        </div>
+                        <div><a href="/minishop/createOrder.php" role="button" class="btn btn-primary">New Order</a></div>
+                    </div>
+
+                </div>
+                <div class="card-body" style="overflow-y: scroll; height:450px;scrollbar-width: none;">
+                    <div class="container bootdey">
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
                                 <!-- Timeline start -->
                                 <div class="timeline">
                                     <?php

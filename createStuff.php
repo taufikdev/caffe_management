@@ -66,9 +66,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <?php include 'layouts/navbar.html'; ?>
             <div class="card" style="border-radius: 1em;">
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>Add new <span style="font-weight: bold;color: yellowgreen;">Staff:</span></h4>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="card-body">
-                    <br>
-                    <h2>New Staff</h2><br>
                     <?php
                     if (!empty($error_massage)) {
                         echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
@@ -128,9 +135,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </form>
                 </div>
             </div>
-            </div>
-            </div>
-            <?php include 'layouts/scriptjs.html'; ?>
+        </div>
+    </div>
+    </div>
+    </div>
+    <?php include 'layouts/scriptjs.html'; ?>
 </body>
 
 </html>

@@ -57,11 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             die("Invalid query: " . $connection->error);
         }
 
-
-        // $name = "";
-        // $email = "";
-        // $phone = "";
-        // $address = "";
         $success_message = "Client updated successfully";
 
         header("location: /minishop/index.php");
@@ -79,48 +74,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <div class="wrapper d-flex align-items-stretch">
         <?php include 'layouts/sidebar.html'; ?>
         <div id="content" class="p-4 p-md-5">
-
             <?php include 'layouts/navbar.html'; ?>
-            <br>
-            <h2>Edit Client</h2><br>
-            <?php
-            if (!empty($error_massage)) {
-                echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+            <div class="card" style="border-radius: 1em;">
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>Edit Info of : <span style="font-weight: bold;color: yellowgreen;"><?php echo $name; ?></span></h4>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <?php
+                    if (!empty($error_massage)) {
+                        echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
             <div>$error_massage</div>
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>";
-            }
-            ?>
-            <br>
-            <form action="#" method="post">
-                <input type="hidden" name="id" value="<?php echo $id; ?>">
-                <div class="row mb-3">
-                    <label for="" class="col-sm-3 col-form-label">Name</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" value="<?php echo $name; ?>">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="" class="col-sm-3 col-form-label">Email</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="" class="col-sm-3 col-form-label">Phone</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" name="phone" value="<?php echo $phone; ?>">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="" class="col-sm-3 col-form-label">Address</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" name="address" value="<?php echo $address; ?>">
-                    </div>
-                </div>
-                <?php
-                if (!empty($success_message)) {
-                    echo "
+                    }
+                    ?>
+                    <br>
+                    <form action="#" method="post">
+                        <input type="hidden" name="id" value="<?php echo $id; ?>">
+                        <div class="row mb-3">
+                            <label for="" class="col-sm-3 col-form-label">Name</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="name" value="<?php echo $name; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="" class="col-sm-3 col-form-label">Phone</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="phone" value="<?php echo $phone; ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="" class="col-sm-3 col-form-label">Address</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="address" value="<?php echo $address; ?>">
+                            </div>
+                        </div>
+                        <?php
+                        if (!empty($success_message)) {
+                            echo "
                 <div class='row mb-3'>
                     <div class='offset-sm-3 col-sm-3 d-grid'>
                     <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -130,19 +133,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     </div>
                     </div>
                     ";
-                }
-                ?>
-                <div class="row mb-3">
-                    <div class="offset-sm-3 col-sm-3 d-grid">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                    <div class="col-sm-3 d-grid">
-                        <a href="/minishop/index.php" class="btn btn-outline-primary" role="button">Cancel</a>
-                    </div>
+                        }
+                        ?>
+                        <div class="row mb-3">
+                            <div class="offset-sm-3 col-sm-3 d-grid">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                            <div class="col-sm-3 d-grid">
+                                <a href="/minishop/index.php" class="btn btn-outline-primary" role="button">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    <?php include 'layouts/scriptjs.html'; ?>
 </body>
+<?php include 'layouts/scriptjs.html'; ?>
 </html>

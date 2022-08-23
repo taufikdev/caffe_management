@@ -10,15 +10,19 @@ include('items/auth.php');
         <div id="content" class="p-4 p-md-5">
             <?php include 'layouts/navbar.html'; ?>
             <div class="card" style="border-radius: 1em;">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2>List of Staff</h2>
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>List of <span style="font-weight: bold;color: yellowgreen;">Staffs</span></h4>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-end"> <a href="/minishop/createStuff.php" role="button" class="btn btn-primary">New Staff</a> <br> <br>
-                        </div>
+                        <div><a href="/minishop/createStuff.php" role="button" class="btn btn-primary">New Staff</a></div>
                     </div>
-                    <table class="table">
+
+                </div>
+                <div class="card-body" style="overflow-y: scroll; height:450px;scrollbar-width: none;">
+
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -60,8 +64,8 @@ include('items/auth.php');
                     </table>
                 </div>
             </div>
-            </div>
-            </div>
+        </div>
+    </div>
 </body>
 <?php include 'layouts/scriptjs.html'; ?>
 

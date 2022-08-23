@@ -20,16 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
 
-        
-
-
         $sql = "INSERT INTO `order_line` (`Id`, `order_id`, `item`, `qte`, `price`) VALUES (NULL, '$order_id', '$item', '$qte','$price'); ";
         if ($connection->query($sql) === TRUE) {
             $last_id = $connection->insert_id;
             $data = array("line" => $last_id);
             header("Content-Type: application/json");
             echo json_encode($data);
-            exit();
+        
         } else {
             echo json_encode(array("err" => $connection->error));
         }

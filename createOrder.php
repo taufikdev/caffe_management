@@ -4,7 +4,6 @@ session_start();
 if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
     header("location: /minishop/start.php");
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -26,66 +25,80 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
         <?php include 'layouts/sidebar.html'; ?>
         <div id="content" class="p-4 p-md-5">
             <?php include 'layouts/navbar.html'; ?>
-            <div class="row">
-                <div class="col-sm-9">
-                    <div class="card" style="border-radius: 1em; height: 250px;">
-                        <div class="card-body">
-                            <div id="carouselExampleIndicators" class="carousel slide" style="width: 80%;" data-ride="carousel">
-                                <div class="carousel-inner " style="margin-left: 5em; ">
-                                    <?php
-                                    while ($row = $result->fetch_assoc()) {
-                                        $status = $row['status'] == 1 ? "valable" : "epuise";
-                                    ?>
-                                        <div class="carousel-item<?php echo $row['id'] == 1 ? ' active' : ''; ?>">
-                                            <img class="d-block w-25" src="images/<?php echo $row['image']; ?>" alt="First slide">
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <input type="text" hidden name="item_id" value="<?php echo $row['id']; ?>" id="item_id">
-                                                <h4><span id="item_name" style="color: lightslategray; font-weight: bold;"><?php echo $row['name']; ?></span> <span style="color: whitesmoke;" class="badge bg-danger"><?php echo $row['price']; ?>.00DH</span> <span hidden id="item_price"><?php echo $row['price']; ?></span></h4>
-                                                <input type="checkbox" name="<?php echo $row['name']; ?>" id=""> &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <span style="color: lightslategrey;">Quantity:</span> <input type="number" name="qte_<?php echo $row['name']; ?>" value="1" id="num_<?php echo $row['name']; ?>" style="width: 70px; height: 40px; font-size: large;">
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon bg-dark rounded" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
+            <div class="card" style="border-radius: 1em;">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>Create Order On : <span style="font-weight: bold;color: yellowgreen;"><?php echo date('F, Y'); ?></span></h4>
                         </div>
+                        <!-- <div>
+                            <a href="#" role="button" class="btn btn-primary">Print report</a>
+                        </div> -->
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="card" style="border-radius: 1em;">
-                        <div class="card-body">
-                            <h6 style="color: lightslategray;"> Reciept</h6>
-                            <hr>
-                            <div class="selected_items">
-                                <ul id="item_list">
 
-                                </ul>
+                </div>
+                <div class="card-body" style="overflow-y: scroll; height:450px;scrollbar-width: none;">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="card" style="border-radius: 1em; height: 250px;">
+                                <div class="card-body">
+                                    <div id="carouselExampleIndicators" class="carousel slide" style="width: 80%;" data-ride="carousel">
+                                        <div class="carousel-inner " style="margin-left: 5em; ">
+                                            <?php
+                                            while ($row = $result->fetch_assoc()) {
+                                                $status = $row['status'] == 1 ? "valable" : "epuise";
+                                            ?>
+                                                <div class="carousel-item<?php echo $row['id'] == 1 ? ' active' : ''; ?>">
+                                                    <img class="d-block w-25" src="images/<?php echo $row['image']; ?>" alt="First slide">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <input type="text" hidden name="item_id" value="<?php echo $row['id']; ?>" id="item_id">
+                                                        <h4><span id="item_name" style="color: lightslategray; font-weight: bold;"><?php echo $row['name']; ?></span> <span style="color: whitesmoke;" class="badge bg-danger"><?php echo $row['price']; ?>.00DH</span> <span hidden id="item_price"><?php echo $row['price']; ?></span></h4>
+                                                        <input type="checkbox" name="<?php echo $row['name']; ?>" id=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <span style="color: lightslategrey;">Quantity:</span> <input type="number" name="qte_<?php echo $row['name']; ?>" value="1" id="num_<?php echo $row['name']; ?>" style="width: 70px; height: 40px; font-size: large;">
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon bg-dark rounded" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="vertical-center">
-                                <h6 style="color: lightslategray; text-align: end;"> <button id="place_order" class="btn btn-primary">Confirm</button> &nbsp;&nbsp;&nbsp; Total : <span id="total" style="color: whitesmoke;" class="badge bg-danger"> 00.00 Dh</span></h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="card" style="border-radius: 1em;">
+                                <div class="card-body">
+                                    <h6 style="color: lightslategray;"> Reciept</h6>
+                                    <hr>
+                                    <div class="selected_items">
+                                        <ul id="item_list">
+
+                                        </ul>
+                                    </div>
+                                    <hr>
+                                    <div class="vertical-center">
+                                        <h6 style="color: lightslategray; text-align: end;"> <button id="place_order" class="btn btn-primary">Confirm</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total : <span id="total" style="color: whitesmoke;" class="badge bg-danger"> 00.00 Dh</span></h6>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- -------------------------------toast---------------------------------- -->
                 </div>
             </div>
-            <!-- -------------------------------toast---------------------------------- -->
-
             <br><br>
 
             <div class="toast bg-success fade mt-4 text-white" id="myToast">
                 <div class="toast-header bg-success align-items-end text-white">
                     <strong class="me-auto"><i class="bi-gift-fill"></i> Thank you!</strong>
-                    <small class="">1s ago</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                    <small>1s ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast">X</button>
                 </div>
                 <div class="toast-body">
                     Order created successfully!
@@ -193,7 +206,6 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
             });
 
             $("#total").text(total + ".00DH");
-           
         });
 
         $("#place_order").click(function() {
@@ -224,7 +236,7 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                             dataType: 'json',
                             success: function(data) {},
                             error: function(xhr, status, error) {
-                                alert(error + "---------[errr]");
+                                // alert(error + "---------[errr]");
                             }
                         });
                     });
@@ -232,13 +244,12 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                         delay: 5000
                     });
                     $("#myToast").toast("show");
+                    $('#place_order').prop('disabled', true);
                 },
                 error: function(xhr, status, error) {
                     alert(error + "{errr}");
                 }
             });
-
-
 
         });
     });

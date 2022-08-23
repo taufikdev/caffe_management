@@ -98,9 +98,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             <?php include 'layouts/navbar.html'; ?>
             <div class="card" style="border-radius: 1em;">
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>Edit Info of : <span style="font-weight: bold;color: yellowgreen;"><?php echo $name; ?></span></h4>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="card-body">
-                    <br>
-                    <h2>Edit Stuff</h2><br>
+                    
                     <?php
                     if (!empty($error_massage)) {
                         echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
@@ -160,10 +168,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         </div>
                     </form>
                 </div>
-                </div>
-                </div>
             </div>
-            <?php include 'layouts/scriptjs.html'; ?>
+        </div>
+    </div>
+    <?php include 'layouts/scriptjs.html'; ?>
 </body>
 
 </html>

@@ -1,10 +1,38 @@
 <?php
-
+include('connection.php');
 include('items/auth.php');
 
+//-------------get data for bar chart---------------------
+
+$sql = 'SELECT SUM(`order_line`.price) as "total", DAY(date) as "day" FROM `order_line` JOIN `order` ON `order_line`.`order_id` = `order`.`id` WHERE MONTH(date) = MONTH(NOW()) GROUP BY DAY(date); ';
+$result = $connection->query($sql);
+
+if (!$result) {
+    die("Invalid query: " . $connection->error);
+}
+
+while ($row = $result->fetch_assoc()) {
+    $total[]  = $row['total'];
+    $days[] = $row['day'] . "-" . date('m');
+}
+
+//-------------get data for pie chart---------------------
+$sql2 = 'SELECT `stuff`.`name` ,SUM(`order_line`.`price`) as "earning" FROM `order_line` JOIN `order` ON `order_line`.`order_id` = `order`.`id` JOIN `stuff` ON `order`.`server` = `stuff`.`id` WHERE DAY(`order`.`date`) = DAY(NOW()) GROUP BY `stuff`.`id`; ';
+$result2 = $connection->query($sql2);
+
+if (!$result2) {
+    die("Invalid query: " . $connection->error);
+}
+
+while ($row2 = $result2->fetch_assoc()) {
+    $names[]  = $row2['name'];
+    $earning[] = $row2['earning'];
+}
+
+
+$connection->close();
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,81 +48,77 @@ include('items/auth.php');
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-
-
-
 <body>
     <div class="wrapper d-flex align-items-stretch">
         <?php include 'layouts/sidebar.html'; ?>
         <div id="content" class="p-4 p-md-5">
             <?php include 'layouts/navbar.html'; ?>
-            <div class="d-flex justify-content: space-between">
-                <div class="chart-container" style="position: relative; height:400px; width: 450px;">
-                    <canvas id="myChart"></canvas>
+            <div class="card" style="border-radius: 1em;">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>Summury Of : <span style="font-weight: bold;color: yellowgreen;"><?php echo date('F, Y'); ?></span></h4>
+                        </div>
+                        <div>
+                            <a href="#" role="button" class="btn btn-primary">Print report</a>
+                        </div>
+                    </div>
+
                 </div>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="chart-container" style="position: relative; height:300px; width: 350px;margin-left: 15em;">
-                    <canvas id="myChart2"></canvas>
+                <div class="card-body">
+                    <div class="d-flex justify-content: space-between">
+                        <div class="chart-container" style="position: relative; height:500px; width: 450px;">
+                            <h5 style="color: lightslategray;">How much the coffe shop earned each day</h5> <br>
+                            <canvas id="myChart"></canvas>
+                        </div> &nbsp; &nbsp; &nbsp; &nbsp;
+                        <div class="chart-container" style="position: relative; height:300px; width: 350px;margin-left: 15em;">
+                            <h5 style="color: lightslategray;">Waiter of the Day</h5>
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </div>
 </body>
-<script>
+<script type="text/javascript">
+    //--------------------------populate charts--------------------------------
+
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow'],
+            labels: <?php echo json_encode($days); ?>,
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3],
+                label: 'Total earns per day in MAD',
+                data: <?php echo json_encode($total); ?>,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    //----------------------------------------
-    const ctx2 = document.getElementById('myChart2').getContext('2d');
-    const myChart2 = new Chart(ctx2, {
-        type: 'doughnut',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3],
-                backgroundColor: [
-                    'rgba(202, 16, 56, 0.877)',
+                    // 'rgba(202, 16, 56, 0.877)',
                     'rgb(25, 95, 141)',
-                    'rgb(235, 169, 16)'
-                ]
+                    'rgb(235, 169, 80)'
+                ],
+
             }]
         },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
     });
+    if (parseInt("<?php echo count($names); ?>") > 0) {
+        const ctx2 = document.getElementById('myChart2').getContext('2d');
+        const myChart2 = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: <?php echo json_encode($names); ?>,
+                datasets: [{
+                    label: 'Waiter of the Day',
+                    data: <?php echo json_encode($earning); ?>,
+                    backgroundColor: [
+                        'rgba(202, 16, 56, 0.877)',
+                        'rgb(25, 95, 141)',
+                        'rgb(235, 169, 80)'
+                    ],
+                    hoverOffset: 4
+                }]
+            }
+        });
+    }
 </script>
 <?php include 'layouts/scriptjs.html'; ?>
 
