@@ -311,7 +311,7 @@ $total = 0;
 
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h4>List of <span style="font-weight: bold;color: yellowgreen;">Orders</span></h4>
+                            <h4 style="color: lightslategray;">List of <span style="font-weight: bold;color: yellowgreen;">Orders</span></h4>
                         </div>
                         <div><a href="/minishop/createOrder.php" role="button" class="btn btn-primary">New Order</a></div>
                     </div>

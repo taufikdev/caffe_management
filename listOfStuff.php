@@ -14,7 +14,7 @@ include('items/auth.php');
 
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h4>List of <span style="font-weight: bold;color: yellowgreen;">Staffs</span></h4>
+                            <h4 style="color: lightslategray;">List of <span style="font-weight: bold;color: yellowgreen;">Staffs</span></h4>
                         </div>
                         <div><a href="/minishop/createStuff.php" role="button" class="btn btn-primary">New Staff</a></div>
                     </div>
@@ -68,5 +68,10 @@ include('items/auth.php');
     </div>
 </body>
 <?php include 'layouts/scriptjs.html'; ?>
+<style>
+    .table>tbody>tr>td {
+        vertical-align: middle;
+    }
+</style>
 
 </html>

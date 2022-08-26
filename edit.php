@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h4>Edit Info of : <span style="font-weight: bold;color: yellowgreen;"><?php echo $name; ?></span></h4>
+                            <h4 style="color: lightslategray;">Edit Info of : <span style="font-weight: bold;color: yellowgreen;"><?php echo $name; ?></span></h4>
                         </div>
                     </div>
 
@@ -150,4 +150,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     </div>
 </body>
 <?php include 'layouts/scriptjs.html'; ?>
+
 </html>

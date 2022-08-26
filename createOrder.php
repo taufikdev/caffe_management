@@ -29,45 +29,34 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h4>Create Order On : <span style="font-weight: bold;color: yellowgreen;"><?php echo date('F, Y'); ?></span></h4>
+                            <h4 style="color: lightslategray;">Create Order On : <span style="font-weight: bold;color: yellowgreen;"><?php echo date('j F, Y'); ?></span></h4>
                         </div>
-                        <!-- <div>
-                            <a href="#" role="button" class="btn btn-primary">Print report</a>
-                        </div> -->
                     </div>
 
                 </div>
-                <div class="card-body" style="overflow-y: scroll; height:450px;scrollbar-width: none;">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-sm-8">
-                            <div class="card" style="border-radius: 1em; height: 250px;">
-                                <div class="card-body">
-                                    <div id="carouselExampleIndicators" class="carousel slide" style="width: 80%;" data-ride="carousel">
-                                        <div class="carousel-inner " style="margin-left: 5em; ">
-                                            <?php
-                                            while ($row = $result->fetch_assoc()) {
-                                                $status = $row['status'] == 1 ? "valable" : "epuise";
-                                            ?>
-                                                <div class="carousel-item<?php echo $row['id'] == 1 ? ' active' : ''; ?>">
-                                                    <img class="d-block w-25" src="images/<?php echo $row['image']; ?>" alt="First slide">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <input type="text" hidden name="item_id" value="<?php echo $row['id']; ?>" id="item_id">
-                                                        <h4><span id="item_name" style="color: lightslategray; font-weight: bold;"><?php echo $row['name']; ?></span> <span style="color: whitesmoke;" class="badge bg-danger"><?php echo $row['price']; ?>.00DH</span> <span hidden id="item_price"><?php echo $row['price']; ?></span></h4>
-                                                        <input type="checkbox" name="<?php echo $row['name']; ?>" id=""> &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <span style="color: lightslategrey;">Quantity:</span> <input type="number" name="qte_<?php echo $row['name']; ?>" value="1" id="num_<?php echo $row['name']; ?>" style="width: 70px; height: 40px; font-size: large;">
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
+                            <div class="card p-4" style="overflow-y: scroll; height:450px;scrollbar-width: none; border-radius: 1em;">
+
+                                <div class="row gy-4">
+                                    <?php
+                                    while ($row = $result->fetch_assoc()) {
+                                        $status = $row['status'] == 1 ? "valable" : "epuise";
+                                    ?>
+                                        <div class="card p-4 m-2 shadow-sm" style="width: 220px; border-radius: 1em;">
+                                            <div>
+                                                <img class="d-block" src="images/<?php echo $row['image']; ?>" style="height: 70px;width: 70px; margin-bottom: .5em;" alt="First slide">
+                                            </div>
+
+                                            <div>
+                                                <input type="text" hidden name="item_id" value="<?php echo $row['id']; ?>" id="item_id">
+                                                <h6><span id="item_name" style="color: lightslategray; font-weight: bold;"><?php echo $row['name']; ?></span> <span style="color: whitesmoke;" class="badge bg-danger"><?php echo $row['price']; ?>.00DH</span> <span hidden id="item_price"><?php echo $row['price']; ?></span></h6>
+                                                <span style="color: lightslategrey;">Quantity:</span> <input type="number" name="qte_<?php echo $row['name']; ?>" value="1" id="num_<?php echo $row['name']; ?>" style="width: 70px; height: 27px; font-size: large;">
+                                                <input type="checkbox" name="<?php echo $row['name']; ?>" id="" style="width: 27px;height: 27px; margin-top: -8em;margin-left: 1em;position: absolute;">
+                                            </div>
                                         </div>
-                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon bg-dark rounded" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -87,26 +76,39 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                                     </div>
                                 </div>
                             </div>
+                            <br> <br>
+                            <div class="alert alert-success alert-dismissible fade show" id="order_done">
+                                <span>
+                                    <p>Order created successfully!</p>
+                                </span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <!-- -------------------------------toast---------------------------------- -->
                 </div>
-            </div>
-            <br><br>
 
-            <div class="toast bg-success fade mt-4 text-white" id="myToast">
-                <div class="toast-header bg-success align-items-end text-white">
-                    <strong class="me-auto"><i class="bi-gift-fill"></i> Thank you!</strong>
-                    <small>1s ago</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast">X</button>
-                </div>
-                <div class="toast-body">
-                    Order created successfully!
-                </div>
             </div>
-
             <!-- -------------------------------toast---------------------------------- -->
         </div>
+    </div>
+    <br><br>
+
+    <!-- <div class="toast bg-success fade mt-4 text-white" id="myToast">
+        <div class="toast-header bg-success align-items-end text-white">
+            <strong class="me-auto"><i class="bi-gift-fill"></i> Thank you!</strong>
+            <small>1s ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast">X</button>
+        </div>
+        <div class="toast-body">
+            Order created successfully!
+        </div>
+    </div> -->
+
+
+    <!-- -------------------------------toast---------------------------------- -->
+    </div>
     </div>
 </body>
 <!-- <script src="js/jquery.min.js"></script> -->
@@ -116,6 +118,7 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
 
 <script>
     $(document).ready(function() {
+        $('#order_done').hide();
         $('#place_order').prop('disabled', true);
         $("#total").text("00.00DH");
         var total = 0;
@@ -123,6 +126,10 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
         $("input[type=checkbox]").change(function() {
 
             if ($(this).is(":checked")) {
+                $(this).parent().parent().css("transition - timing - function", "ease - in")
+                $(this).parent().parent().css("transition", "0.2s")
+                $(this).parent().parent().css("transform", "scale(1.05)")
+
                 var item_id = $(this).parent().find("#item_id").val();
                 var item_qte = $(this).parent().find("input[type='number']").val();
                 var item_name = $(this).parent().find('#item_name').text();
@@ -147,6 +154,10 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                 }
 
             } else {
+                $(this).parent().parent().css("transition - timing - function", "ease - out")
+                $(this).parent().parent().css("transition", "0.2s")
+                $(this).parent().parent().css("transform", "scale(1)")
+
                 $("#item_list li").each((id, elem) => {
                     var item_id = $(this).parent().find("#item_id").val();
                     var item_qte = $(this).parent().find("input[type='number']").val();
@@ -240,11 +251,14 @@ if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
                             }
                         });
                     });
-                    $("#myToast").toast({
-                        delay: 5000
-                    });
-                    $("#myToast").toast("show");
+                    $('#order_done').show();
+                    $('#order_done').fadeIn();
                     $('#place_order').prop('disabled', true);
+                    $("#item_list").empty();
+                    $("#total").text("00.00DH");
+                    $('input:checkbox').removeAttr('checked');
+                    $("input[type=number]").val("1");
+
                 },
                 error: function(xhr, status, error) {
                     alert(error + "{errr}");

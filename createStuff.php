@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h4>Add new <span style="font-weight: bold;color: yellowgreen;">Staff:</span></h4>
+                            <h4 style="color: lightslategray;">Add new <span style="font-weight: bold;color: yellowgreen;">Staff:</span></h4>
                         </div>
                     </div>
 

@@ -23,7 +23,7 @@ if (!$result) {
 
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h4>List of <span style="font-weight: bold;color: yellowgreen;">Suppliers</span></h4>
+                            <h4 style="color: lightslategray;">List of <span style="font-weight: bold;color: yellowgreen;">Suppliers</span></h4>
                         </div>
                         <div><a href="/minishop/create.php" role="button" class="btn btn-primary">New Client</a></div>
                     </div>
@@ -69,5 +69,10 @@ if (!$result) {
     </div>
     <?php include 'layouts/scriptjs.html'; ?>
 </body>
+<style>
+    .table>tbody>tr>td {
+        vertical-align: middle;
+    }
+</style>
 
 </html>

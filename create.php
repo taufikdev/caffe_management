@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h4>Add New <span style="font-weight: bold;color: yellowgreen;">Supplier :</span></h4>
+                            <h4 style="color: lightslategray;">Add New <span style="font-weight: bold;color: yellowgreen;">Supplier :</span></h4>
                         </div>
                     </div>
 
@@ -128,8 +128,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </form>
                 </div>
             </div>
+        </div>
     </div>
-</div>
 </body>
 <?php include 'layouts/scriptjs.html'; ?>
 

@@ -102,13 +102,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h4>Edit Info of : <span style="font-weight: bold;color: yellowgreen;"><?php echo $name; ?></span></h4>
+                            <h4 style="color: lightslategray;">Edit Info of : <span style="font-weight: bold;color: yellowgreen;"><?php echo $name; ?></span></h4>
                         </div>
                     </div>
 
                 </div>
                 <div class="card-body">
-                    
+
                     <?php
                     if (!empty($error_massage)) {
                         echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>

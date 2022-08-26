@@ -175,6 +175,9 @@ svg {
 table {
   border-collapse: collapse; }
 
+
+
+
 caption {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -8326,3 +8329,4 @@ a[data-toggle="collapse"] {
   .btn.btn-primary:hover, .btn.btn-primary:focus {
     background: #3e64ff !important;
     border-color: #3e64ff !important; }
+

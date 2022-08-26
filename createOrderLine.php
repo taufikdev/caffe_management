@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             echo json_encode(array("err" => $connection->error));
         }
-        
+        $success_message = "Order created successfully";
         $connection->close();
         header('location: /minishop/ordersList.php');
         exit();
