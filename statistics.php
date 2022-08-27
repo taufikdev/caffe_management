@@ -36,6 +36,16 @@ if (!$result3) {
     die("Invalid query: " . $connection->error);
 }
 
+$sql4 = 'SELECT count(*) as "nbr_order", CONCAT(DAY(date),CONCAT(" - ",MONTH(date))) AS "date"  FROM `order` WHERE MONTH(date) = MONTH(NOW()) GROUP BY DAY(date);';
+$result4 = $connection->query($sql4);
+if (!$result4) {
+    die("Invalid query: " . $connection->error);
+}
+
+while ($row4 = $result4->fetch_assoc()) {
+    $dates[]  = $row4['date'];
+    $nbr_order[] = $row4['nbr_order'];
+}
 
 $connection->close();
 
@@ -78,7 +88,7 @@ $connection->close();
                             <h5 style="color: lightslategray;">How much the coffe shop earned each day</h5> <br>
                             <canvas id="myChart"></canvas>
                             <div class="card mt-4 pl-4 pb-4 pt-2" style="border-radius: 1em;">
-                                <h5 style="color: lightslategray;">Number of order made today by:</h5>
+                                <h5 style="color: lightslategray;">Number of orders made today by:</h5>
                                 <?php while ($row3 = $result3->fetch_assoc()) { ?>
                                     <h6><span style="color: yellowgreen;"><i class="fa fa-dot-circle-o" aria-hidden="true"></i>
                                             <?php echo $row3["name"]; ?> </span> <i class="fa fa-long-arrow-right" aria-hidden="true"></i><span style="font-weight: bold;color: lightcoral;"> <?php echo $row3["Number_of_orders"]; ?></span><span style="color: lightcoral;"> Orders</span>
@@ -90,7 +100,13 @@ $connection->close();
                             <h5 style="color: lightslategray;">Waiter of the Day</h5>
                             <canvas id="myChart2"></canvas>
                         </div>
+
                     </div>
+                    <div class="chart-container" style="height:auto; width: auto;margin: auto;">
+                        <h5 style="color: lightslategray;">Number of orders each day of the current month</h5>
+                        <canvas id="myChart3"></canvas>
+                    </div>
+                    <br> <br>
                 </div>
             </div>
         </div>
@@ -134,6 +150,19 @@ $connection->close();
             }
         });
     }
+    const ctx3 = document.getElementById('myChart3').getContext('2d');
+    const myChart3 = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: <?php echo json_encode($dates); ?>,
+            datasets: [{
+                label: 'Number of orders each day of the current month.',
+                data: <?php echo json_encode($nbr_order); ?>,
+                backgroundColor: 'rgb(75, 192, 192)',
+                tension: 0.3
+            }]
+        }
+    });
 </script>
 <?php include 'layouts/scriptjs.html'; ?>
 
