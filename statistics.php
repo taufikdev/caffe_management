@@ -77,7 +77,7 @@ $connection->close();
                             <h4 style="color: lightslategray;">Summury Of : <span style="font-weight: bold;color: yellowgreen;"><?php echo date('D F, Y'); ?></span></h4>
                         </div>
                         <div>
-                            <a href="#" role="button" class="btn btn-primary">Print report</a>
+                            <a href="#" onclick="printIt();" role="button" class="btn btn-primary">Print report</a>
                         </div>
                     </div>
 
@@ -112,6 +112,9 @@ $connection->close();
         </div>
 </body>
 <script type="text/javascript">
+    function printIt() {
+        window.print();
+    }
     //--------------------------populate charts--------------------------------
 
     const ctx = document.getElementById('myChart').getContext('2d');
